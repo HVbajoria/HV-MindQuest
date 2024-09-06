@@ -1,0 +1,64 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  chat_history:
+    type: list
+    is_chat_history: true
+    default: []
+  Topic:
+    type: string
+    is_chat_input: true
+  Number of Questions:
+    type: int
+  Difficulty:
+    type: string
+    default: ""
+outputs:
+  answer:
+    type: string
+    reference: ${excel_gen.output}
+    is_chat_output: true
+nodes:
+- name: gen
+  type: prompt
+  source:
+    type: code
+    path: gen.jinja2
+  inputs:
+    number: ${inputs.Number of Questions}
+    difficulty: ${inputs.Difficulty}
+    topic: ${inputs.Topic}
+- name: gen_mcq
+  type: llm
+  source:
+    type: code
+    path: gen_mcq.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.7
+    response_format:
+      type: text
+    question: ${gen.output}
+  connection: azure_open_ai
+  api: chat
+- name: excel
+  type: prompt
+  source:
+    type: code
+    path: excel.jinja2
+  inputs:
+    question: ${gen_mcq.output}
+- name: excel_gen
+  type: llm
+  source:
+    type: code
+    path: excel_gen.jinja2
+  inputs:
+    deployment_name: gpt-4o
+    temperature: 0.7
+    response_format:
+      type: text
+    question: ${excel.output}
+  connection: azure_open_ai
+  api: chat

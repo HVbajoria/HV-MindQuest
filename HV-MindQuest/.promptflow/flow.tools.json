@@ -1,0 +1,86 @@
+{
+  "package": {},
+  "code": {
+    "chat.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "chat_history": {
+          "type": [
+            "string"
+          ]
+        },
+        "question": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "chat.jinja2"
+    },
+    "Question.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "text": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "Question.jinja2"
+    },
+    "gen.jinja2": {
+      "type": "prompt",
+      "inputs": {
+        "number": {
+          "type": [
+            "string"
+          ]
+        },
+        "difficulty": {
+          "type": [
+            "string"
+          ]
+        },
+        "topic": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "gen.jinja2"
+    },
+    "gen_mcq.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "gen_mcq.jinja2"
+    },
+    "excel.jinja2": {
+      "type": "prompt",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "excel.jinja2"
+    },
+    "excel_gen.jinja2": {
+      "type": "llm",
+      "inputs": {
+        "question": {
+          "type": [
+            "string"
+          ]
+        }
+      },
+      "source": "excel_gen.jinja2"
+    }
+  }
+}
